@@ -12,6 +12,7 @@ export class CdkStepsStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
       code: new lambda.AssetCode('./lambdas/functionOne'),
+      tracing: lambda.Tracing.ACTIVE,
     });
     const taskEventOne = new sfn.Task(this, 'stepFunctionOne', {
       task: new tasks.InvokeFunction(functionOne),
@@ -22,6 +23,7 @@ export class CdkStepsStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
       code: new lambda.AssetCode('./lambdas/functionTwo'),
+      tracing: lambda.Tracing.ACTIVE,
     });
     const taskEventTwo = new sfn.Task(this, 'stepFunctionTwo', {
       task: new tasks.InvokeFunction(functionTwo),
@@ -32,6 +34,7 @@ export class CdkStepsStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
       code: new lambda.AssetCode('./lambdas/functionThree'),
+      tracing: lambda.Tracing.ACTIVE,
     });
     const taskEventThree = new sfn.Task(this, 'stepFunctionThree', {
       task: new tasks.InvokeFunction(functionThree),
@@ -42,6 +45,7 @@ export class CdkStepsStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
       code: new lambda.AssetCode('./lambdas/functionFour'),
+      tracing: lambda.Tracing.ACTIVE,
     });
     const taskEventFour = new sfn.Task(this, 'stepFunctionFour', {
       task: new tasks.InvokeFunction(functionFour),
@@ -52,6 +56,7 @@ export class CdkStepsStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
       code: new lambda.AssetCode('./lambdas/functionFive'),
+      tracing: lambda.Tracing.ACTIVE,
     });
     const taskEventFive = new sfn.Task(this, 'stepFunctionFive', {
       task: new tasks.InvokeFunction(functionFive),
@@ -62,6 +67,7 @@ export class CdkStepsStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
       code: new lambda.AssetCode('./lambdas/functionSix'),
+      tracing: lambda.Tracing.ACTIVE,
     });
     const taskEventSix = new sfn.Task(this, 'stepFunctionSix', {
       task: new tasks.InvokeFunction(functionSix),
