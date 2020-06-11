@@ -26,3 +26,9 @@ https://github.com/ykbryan/aws-cdk-ecs-application-load-balancer-example
 https://blog.codecentric.de/en/2019/11/aws-cdk-part-4-create-lambdas/
 
 cdk bootstrap --profile defaultsg
+
+cdk diff --profile defaultsg
+
+cdk deploy --profile defaultsg
+
+yarn build
