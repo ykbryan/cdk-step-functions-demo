@@ -4,4 +4,4 @@ import * as cdk from '@aws-cdk/core';
 import { CdkStepsStack } from '../lib/cdk-steps-stack';
 
 const app = new cdk.App();
-new CdkStepsStack(app, 'CdkStepsStack');
+new CdkStepsStack(app, 'StepsDemoStack');
