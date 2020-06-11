@@ -32,3 +32,5 @@ cdk diff --profile defaultsg
 cdk deploy --profile defaultsg
 
 yarn build
+
+https://dev.to/elthrasher/exploring-aws-cdk-step-functions-1d1e
