@@ -21,6 +21,9 @@
     "typescript": "~3.7.2"
   },
   "dependencies": {
+    "@aws-cdk/aws-ec2": "^1.45.0",
+    "@aws-cdk/aws-ecs": "^1.45.0",
+    "@aws-cdk/aws-ecs-patterns": "^1.45.0",
     "@aws-cdk/aws-lambda": "^1.45.0",
     "@aws-cdk/aws-stepfunctions": "^1.45.0",
     "@aws-cdk/aws-stepfunctions-tasks": "^1.45.0",

@@ -2,10 +2,19 @@ import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as sfn from '@aws-cdk/aws-stepfunctions';
 import * as tasks from '@aws-cdk/aws-stepfunctions-tasks';
+import * as ec2 from '@aws-cdk/aws-ec2';
+import * as ecs from '@aws-cdk/aws-ecs';
+import * as ecs_patterns from '@aws-cdk/aws-ecs-patterns';
 
 export class CdkStepsStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+
+    // new VPC
+    const vpc = new ec2.Vpc(this, 'stepsVpc', {
+      maxAzs: 3,
+      natGateways: 1,
+    });
 
     // functionOne
     const functionOne = new lambda.Function(this, 'LambdaFunctionOne', {
@@ -73,6 +82,28 @@ export class CdkStepsStack extends cdk.Stack {
       task: new tasks.InvokeFunction(functionSix),
     });
 
+    // ecs
+    const ecsCluster = new ecs.Cluster(this, 'stepsCluster', { vpc });
+    const fargateService = new ecs_patterns.ApplicationLoadBalancedFargateService(
+      this,
+      'stepsFargate',
+      {
+        cluster: ecsCluster,
+        taskImageOptions: {
+          image: ecs.ContainerImage.fromRegistry(
+            'bryanchua/sample-expressjs-microservice'
+          ),
+          containerPort: 3000,
+        },
+      }
+    );
+    const taskEventSeven = new sfn.Task(this, 'stepFunctionSeven', {
+      task: new tasks.RunEcsFargateTask({
+        cluster: ecsCluster,
+        taskDefinition: fargateService.taskDefinition,
+      }),
+    });
+
     // States
     const fail = new sfn.Fail(this, 'Fail', {
       cause: 'Unable to ...',
@@ -96,11 +127,17 @@ export class CdkStepsStack extends cdk.Stack {
       .addRetry({ maxAttempts: 3 })
       .next(choice)
       .next(parallel)
-      .next(taskEventSix);
+      .next(taskEventSix)
+      .next(taskEventSeven);
 
-    new sfn.StateMachine(this, 'StateMachine', {
+    const stateMachine = new sfn.StateMachine(this, 'StateMachine', {
       definition: definition,
       timeout: cdk.Duration.minutes(3),
+    });
+
+    // cdk output
+    new cdk.CfnOutput(this, 'StepFunction', {
+      value: stateMachine.stateMachineName,
     });
   }
 }

@@ -34,3 +34,5 @@ cdk deploy --profile defaultsg
 yarn build
 
 https://dev.to/elthrasher/exploring-aws-cdk-step-functions-1d1e
+
+https://docs.aws.amazon.com/cdk/api/latest/docs/aws-stepfunctions-tasks-readme.html#runtask
