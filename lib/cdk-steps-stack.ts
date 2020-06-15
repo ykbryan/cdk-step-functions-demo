@@ -97,6 +97,7 @@ export class CdkStepsStack extends cdk.Stack {
         },
       }
     );
+
     const taskEventSeven = new sfn.Task(this, 'stepFunctionSeven', {
       task: new tasks.RunEcsFargateTask({
         cluster: ecsCluster,
@@ -138,6 +139,9 @@ export class CdkStepsStack extends cdk.Stack {
     // cdk output
     new cdk.CfnOutput(this, 'StepFunction', {
       value: stateMachine.stateMachineName,
+    });
+    new cdk.CfnOutput(this, 'LoadBalancer', {
+      value: fargateService.loadBalancer.loadBalancerDnsName,
     });
   }
 }
